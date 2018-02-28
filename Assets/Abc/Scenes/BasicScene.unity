@@ -167,6 +167,11 @@ Prefab:
       propertyPath: rightMargin
       value: 
       objectReference: {fileID: 1657440096}
+    - target: {fileID: 61013964633113018, guid: 9cc2ac8ba8fa2234d92b4b5ab65aa8f1,
+        type: 2}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: 2279727d3033abf4389ab710536f9130, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9cc2ac8ba8fa2234d92b4b5ab65aa8f1, type: 2}
   m_IsPrefabParent: 0
