@@ -9,11 +9,11 @@ public class Ball : MonoBehaviour {
         rb.velocity = new Vector2(0, 5);    
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.CompareTag("Block"))
+        if (collision.collider.CompareTag("Block"))
         {
-            collision.GetComponent<Block>().ReceiveDamage(1);
+            collision.collider.GetComponent<Block>().ReceiveDamage(1);
         }
     }
 
