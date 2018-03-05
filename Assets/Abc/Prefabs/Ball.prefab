@@ -89,6 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5884e71114efda2498901355d3c52fbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deadZoneTag: DeadZone
 --- !u!212 &212942744548018920
 SpriteRenderer:
   m_ObjectHideFlags: 1

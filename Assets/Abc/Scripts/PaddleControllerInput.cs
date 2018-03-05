@@ -5,13 +5,19 @@ public class PaddleControllerInput : MonoBehaviour {
 
     private PaddleController paddleController;
 
-    private void Start()
+    private void Awake()
     {
-        this.paddleController = GetComponent<PaddleController> ();
+        paddleController = GetComponent<PaddleController>();
     }
 
     void FixedUpdate () {
         float move = Input.GetAxis("Horizontal");
-        this.paddleController.move = move;
-	}
+        paddleController.move = move;
+
+        bool launch = Input.GetButtonDown("Jump");
+        if (launch)
+        {
+            paddleController.LaunchBall();
+        }
+    }
 }

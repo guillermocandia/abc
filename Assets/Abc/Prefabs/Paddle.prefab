@@ -20,9 +20,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4428820577952706}
   - component: {fileID: 212626010323333008}
+  - component: {fileID: 70012664742744664}
   - component: {fileID: 114612631519537410}
   - component: {fileID: 114527901908999264}
-  - component: {fileID: 61013964633113018}
   m_Layer: 0
   m_Name: Paddle
   m_TagString: Untagged
@@ -43,8 +43,8 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &61013964633113018
-BoxCollider2D:
+--- !u!70 &70012664742744664
+CapsuleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -56,18 +56,8 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.04, y: 0.24}
-    newSize: {x: 1.04, y: 0.24}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.04, y: 0.24}
-  m_EdgeRadius: 0
+  m_Size: {x: 1.05, y: 0.24}
+  m_Direction: 1
 --- !u!114 &114527901908999264
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -93,6 +83,9 @@ MonoBehaviour:
   speed: 10
   leftMargin: {fileID: 0}
   rightMargin: {fileID: 0}
+  ballPrefab: {fileID: 1802155499993036, guid: acc4a5b25062bc6418aa82239ec103a8, type: 2}
+  ballInitialSpeed: 3
+  ballInitialDirection: {x: 1, y: 1}
   move: 0
 --- !u!212 &212626010323333008
 SpriteRenderer:
