@@ -20,7 +20,7 @@ public class PrefabTile : TileBase
     
     public override bool StartUp(Vector3Int position, ITilemap tilemap, GameObject gameObject)
     {
-        gameObject.transform.position += Vector3.up * 0.16f + Vector3.right * 0.32f;
+        gameObject.transform.position += Vector3.right * .5f + Vector3.up * 0.25f;
         return true;
     }
 
