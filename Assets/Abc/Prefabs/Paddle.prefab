@@ -83,9 +83,6 @@ MonoBehaviour:
   speed: 10
   leftMargin: {fileID: 0}
   rightMargin: {fileID: 0}
-  ballPrefab: {fileID: 1802155499993036, guid: acc4a5b25062bc6418aa82239ec103a8, type: 2}
-  ballInitialSpeed: 3
-  ballInitialDirection: {x: 1, y: 1}
   move: 0
 --- !u!212 &212626010323333008
 SpriteRenderer:
