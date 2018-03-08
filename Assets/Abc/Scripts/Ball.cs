@@ -8,7 +8,7 @@ public class Ball : MonoBehaviour {
 
     private Rigidbody2D rb;
 
-    private float speed;
+    public event Action<GameObject> OnBallDestroyed;
 
     void Start () {
         rb = GetComponent<Rigidbody2D>();
@@ -20,7 +20,6 @@ public class Ball : MonoBehaviour {
         if (collision.collider.CompareTag(deadZoneTag))
         {
             Destroy(this.gameObject);
-            // TODO notify manager
             return;
         }
 
@@ -36,4 +35,11 @@ public class Ball : MonoBehaviour {
         rb.velocity = direction * speed;
     }
 
+    private void OnDestroy()
+    {
+        if(OnBallDestroyed != null)
+        {
+            OnBallDestroyed.Invoke(this.gameObject);
+        }
+    }
 }

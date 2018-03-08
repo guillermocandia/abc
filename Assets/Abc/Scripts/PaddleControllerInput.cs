@@ -1,9 +1,13 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [RequireComponent(typeof(PaddleController))]
 public class PaddleControllerInput : MonoBehaviour {
 
     private PaddleController paddleController;
+    //public delegate void PressJumpDelegate();
+    //public PressJumpDelegate OnPressJump;
+    public event Action OnPressJump;
 
     private void Awake()
     {
@@ -17,7 +21,10 @@ public class PaddleControllerInput : MonoBehaviour {
         bool launch = Input.GetButtonDown("Jump");
         if (launch)
         {
-            paddleController.LaunchBall();
+            if (OnPressJump != null)
+            {
+                OnPressJump.Invoke();
+            }
         }
     }
 }

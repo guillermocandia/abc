@@ -229,9 +229,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1115367031}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c9d054d178d66247974f1a6a0e06d26, type: 3}
+  m_Script: {fileID: 11500000, guid: d24fbc19880ffd740a5599b1aee19b87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  paddle: {fileID: 1421950539}
+  ballPrefab: {fileID: 1802155499993036, guid: acc4a5b25062bc6418aa82239ec103a8, type: 2}
+  ballInitialSpeed: 3
+  ballInitialDirection: {x: 1, y: 1}
 --- !u!4 &1115367033
 Transform:
   m_ObjectHideFlags: 0
@@ -701,6 +705,11 @@ Tilemap:
     m_DirtyIndex: 0
   - serializedVersion: 1
     m_DirtyIndex: 0
+--- !u!1 &1421950539 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1966806730988482, guid: 9cc2ac8ba8fa2234d92b4b5ab65aa8f1,
+    type: 2}
+  m_PrefabInternal: {fileID: 1906884731}
 --- !u!61 &1657440096 stripped
 BoxCollider2D:
   m_PrefabParentObject: {fileID: 61038860721571514, guid: ed994bbda05ec1247b21888e78ede9f8,
