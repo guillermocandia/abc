@@ -21,11 +21,19 @@ public class LevelManager : MonoBehaviour {
 
     private bool isGameRunning = false;
 
+    private GameObject gameManager;
+    private ScoreManager scoreManager;
+    private LivesManager livesManager;
+
 
     void Start()
     {
+        gameManager = GameObject.Find("GameManager");
+        scoreManager = gameManager.GetComponent<ScoreManager>();
+        livesManager = gameManager.GetComponent<LivesManager>();
         paddleSpriteRenderer = paddle.GetComponent<SpriteRenderer>();
         paddleControllerInput = paddle.GetComponent<PaddleControllerInput>();
+        StartCoroutine("StartGame");
     }
 
     public IEnumerator StartGame()
@@ -34,12 +42,14 @@ public class LevelManager : MonoBehaviour {
         GetBlocks();
         paddleControllerInput.OnPressJump += LaunchBalls;
         StartCoroutine("SpawnBall");
+        paddle.SetActive(true);
         isGameRunning = true;
     }
 
     public void StopGame()
     {
         isGameRunning = false;
+        paddle.SetActive(false);
         paddleControllerInput.OnPressJump -= LaunchBalls;
        
         foreach(GameObject ball in balls)
@@ -49,7 +59,6 @@ public class LevelManager : MonoBehaviour {
         }
         foreach (GameObject block in blocks)
         {
-            block.GetComponent<Block>().OnBlockDestroyed -= BlockDestroyed;
             Destroy(block);
         }
     }
@@ -99,12 +108,12 @@ public class LevelManager : MonoBehaviour {
 
         if (isGameRunning)
         {
-            //lives--;
-            //if (lives <= 0)
-            //{
-            //    StopGame();
-            //    return;
-            //}
+            livesManager.Lives--;
+            if (livesManager.Lives <= 0)
+            {
+                StopGame();
+                return;
+            }
         }
         StartCoroutine("SpawnBall");
     }
@@ -125,17 +134,18 @@ public class LevelManager : MonoBehaviour {
 
     void BlockDestroyed(GameObject block)
     {
-        block.GetComponent<Block>().OnBlockDestroyed -= BlockDestroyed;
+        Block blockController = block.GetComponent<Block>();
+        blockController.OnBlockDestroyed -= BlockDestroyed;
         blocks.Remove(block);
         if(isGameRunning)
         {
-            //scoreManager.AddScore(1);
+            scoreManager.Score += blockController.InitialHealth;
 
-            //if(blocks.Count <= 0)
-            //{
-            //    StopGame();
-            //    return;
-            //}  
+            if (blocks.Count <= 0)
+            {
+                StopGame();
+                return;
+            }
         }
     }
 
