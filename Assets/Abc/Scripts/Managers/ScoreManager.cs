@@ -1,8 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
-public class ScoreManager : MonoBehaviour {
+public class ScoreManager : MonoBehaviour
+{
+    public event Action<int> OnScoreChange;
 
     private int score = 0;
 
@@ -16,6 +17,10 @@ public class ScoreManager : MonoBehaviour {
         set
         {
             score = value;
+            if (OnScoreChange != null)
+            {
+                OnScoreChange.Invoke(score);
+            }
         }
     }
 }

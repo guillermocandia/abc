@@ -1,10 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
-public class LivesManager : MonoBehaviour {
-
+public class LivesManager : MonoBehaviour
+{
     [SerializeField] private int initialLives = 5;
+
+    public event Action<int> OnLivesChange;
 
     private int lives;
 
@@ -18,11 +19,23 @@ public class LivesManager : MonoBehaviour {
         set
         {
             lives = value;
+            InvokeOnLivesChange(lives);
         }
     }
 
     private void Start()
     {
         lives = initialLives;
+        InvokeOnLivesChange(lives);
     }
+
+    void InvokeOnLivesChange(int lives)
+    {
+        if (OnLivesChange != null)
+        {
+            OnLivesChange.Invoke(lives);
+        }
+    }
+
+
 }

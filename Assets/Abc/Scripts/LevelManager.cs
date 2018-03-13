@@ -49,7 +49,10 @@ public class LevelManager : MonoBehaviour {
     public void StopGame()
     {
         isGameRunning = false;
-        paddle.SetActive(false);
+        if(paddle)
+        {
+            paddle.SetActive(false);
+        }     
         paddleControllerInput.OnPressJump -= LaunchBalls;
        
         foreach(GameObject ball in balls)
