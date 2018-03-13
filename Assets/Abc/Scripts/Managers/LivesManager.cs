@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
+
 public class LivesManager : MonoBehaviour
 {
     [SerializeField] private int initialLives = 5;
@@ -36,6 +37,5 @@ public class LivesManager : MonoBehaviour
             OnLivesChange.Invoke(lives);
         }
     }
-
-
+    
 }

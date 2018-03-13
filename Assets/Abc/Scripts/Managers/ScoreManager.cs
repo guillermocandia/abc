@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
+
 public class ScoreManager : MonoBehaviour
 {
     public event Action<int> OnScoreChange;
@@ -23,4 +24,5 @@ public class ScoreManager : MonoBehaviour
             }
         }
     }
+
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour {
 
@@ -25,6 +26,8 @@ public class LevelManager : MonoBehaviour {
     private ScoreManager scoreManager;
     private LivesManager livesManager;
 
+    private bool win = false;
+
 
     void Start()
     {
@@ -33,6 +36,8 @@ public class LevelManager : MonoBehaviour {
         livesManager = gameManager.GetComponent<LivesManager>();
         paddleSpriteRenderer = paddle.GetComponent<SpriteRenderer>();
         paddleControllerInput = paddle.GetComponent<PaddleControllerInput>();
+        scoreManager.Score += 0;
+        livesManager.Lives += 0;
         StartCoroutine("StartGame");
     }
 
@@ -41,39 +46,57 @@ public class LevelManager : MonoBehaviour {
         yield return null;
         GetBlocks();
         paddleControllerInput.OnPressJump += LaunchBalls;
-        StartCoroutine("SpawnBall");
         paddle.SetActive(true);
         isGameRunning = true;
+        StartCoroutine("SpawnBall");
+        win = false;
     }
 
     public void StopGame()
     {
+        if (win)
+        {
+            int sceneIndex = SceneManager.GetActiveScene().buildIndex;
+            //if()
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            return;
+        }
+
         isGameRunning = false;
         if(paddle)
         {
             paddle.SetActive(false);
-        }     
-        paddleControllerInput.OnPressJump -= LaunchBalls;
+        }
+        if(paddleControllerInput)
+        {
+            paddleControllerInput.OnPressJump -= LaunchBalls;
+        }
        
         foreach(GameObject ball in balls)
         {
-            ball.GetComponent<Ball>().OnBallDestroyed -= BallDestroyed;
-            Destroy(ball);
+            if(ball)
+            {
+                ball.GetComponent<Ball>().OnBallDestroyed -= BallDestroyed;
+                Destroy(ball);
+            }       
         }
         foreach (GameObject block in blocks)
         {
             Destroy(block);
         }
+
+       
     }
 
     // Spawn ball in paddle
     IEnumerator SpawnBall()
     {
-        yield return null;
-        if (!isGameRunning && !paddle)
+        if (!isGameRunning || !paddle)
         {
             StopCoroutine("SpawnBall");
         }
+        yield return null;
+
         GameObject ball = Instantiate(ballPrefab, Vector2.zero, Quaternion.identity, paddle.transform);
         ballSpriteRenderer = ball.GetComponent<SpriteRenderer>();
 
@@ -109,7 +132,7 @@ public class LevelManager : MonoBehaviour {
         ball.GetComponent<Ball>().OnBallDestroyed -= BallDestroyed;
         balls.Remove(ball);
 
-        if (isGameRunning)
+        if (isGameRunning && !win)
         {
             livesManager.Lives--;
             if (livesManager.Lives <= 0)
@@ -117,8 +140,13 @@ public class LevelManager : MonoBehaviour {
                 StopGame();
                 return;
             }
+            else
+            {
+                if (this)
+                    StartCoroutine("SpawnBall");
+            }
         }
-        StartCoroutine("SpawnBall");
+        
     }
 
     private void OnDestroy()
@@ -146,6 +174,7 @@ public class LevelManager : MonoBehaviour {
 
             if (blocks.Count <= 0)
             {
+                win = true;
                 StopGame();
                 return;
             }
