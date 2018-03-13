@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour {
+public class LevelManager : MonoBehaviour {
 
     [Header("Paddle Options")]
     [SerializeField] private GameObject paddle;
@@ -11,12 +11,6 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private GameObject ballPrefab;
     [SerializeField] private float ballInitialSpeed = 3.0f;
     [SerializeField] private Vector2 ballInitialDirection = Vector2.one;
-
-    [Header("Score Manager")]
-    [SerializeField] private ScoreManager scoreManager;
-
-    [Header("Game Options")]
-    public int lives = 5;
 
     private SpriteRenderer paddleSpriteRenderer;
     private SpriteRenderer ballSpriteRenderer;
@@ -27,18 +21,14 @@ public class GameManager : MonoBehaviour {
 
     private bool isGameRunning = false;
 
-    private void Awake()
+
+    void Start()
     {
         paddleSpriteRenderer = paddle.GetComponent<SpriteRenderer>();
         paddleControllerInput = paddle.GetComponent<PaddleControllerInput>();
     }
 
-    private void Start()
-    {
-        StartCoroutine("StartGame");
-    }
-
-    IEnumerator StartGame()
+    public IEnumerator StartGame()
     {
         yield return null;
         GetBlocks();
@@ -47,14 +37,20 @@ public class GameManager : MonoBehaviour {
         isGameRunning = true;
     }
 
-    void StopGame()
+    public void StopGame()
     {
         isGameRunning = false;
         paddleControllerInput.OnPressJump -= LaunchBalls;
+       
         foreach(GameObject ball in balls)
         {
             ball.GetComponent<Ball>().OnBallDestroyed -= BallDestroyed;
             Destroy(ball);
+        }
+        foreach (GameObject block in blocks)
+        {
+            block.GetComponent<Block>().OnBlockDestroyed -= BlockDestroyed;
+            Destroy(block);
         }
     }
 
@@ -62,7 +58,7 @@ public class GameManager : MonoBehaviour {
     IEnumerator SpawnBall()
     {
         yield return null;
-        if (!isGameRunning)
+        if (!isGameRunning && !paddle)
         {
             StopCoroutine("SpawnBall");
         }
@@ -103,11 +99,12 @@ public class GameManager : MonoBehaviour {
 
         if (isGameRunning)
         {
-            lives--;
-            if (lives <= 0)
-            {
-                StopGame();
-            }
+            //lives--;
+            //if (lives <= 0)
+            //{
+            //    StopGame();
+            //    return;
+            //}
         }
         StartCoroutine("SpawnBall");
     }
@@ -124,7 +121,6 @@ public class GameManager : MonoBehaviour {
         {
             block.GetComponent<Block>().OnBlockDestroyed += BlockDestroyed;
         }
-        Debug.Log(blocks.Count);
     }
 
     void BlockDestroyed(GameObject block)
@@ -133,14 +129,13 @@ public class GameManager : MonoBehaviour {
         blocks.Remove(block);
         if(isGameRunning)
         {
-            Debug.Log(blocks.Count);
-            scoreManager.AddScore(1);
+            //scoreManager.AddScore(1);
 
-            if(blocks.Count <= 0)
-            {
-                StopGame();
-                return;
-            }  
+            //if(blocks.Count <= 0)
+            //{
+            //    StopGame();
+            //    return;
+            //}  
         }
     }
 
